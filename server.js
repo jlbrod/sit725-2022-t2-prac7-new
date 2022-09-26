@@ -1,15 +1,18 @@
 require('dotenv').config()
-const express = require("express")
-const app = express()
+var express = require("express")
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 const MongoClient = require('mongoDb').MongoClient;
 var cors = require('cors')
 let dbConnect = require("./dbConnect");
 let projectRoutes = require("./routes/projectRoutes");
 let userRoute = require("./routes/userRoutes");
 
-let http = require('http').createServer(app)
-var io = require('socket.io')(http);
-
+//let http = require('http').createServer(app)
+//const io = require('socket.io')(http);
+//const socket = io();
 
 
 //project model
@@ -40,7 +43,7 @@ app.use('/api/user',userRoute)
 
 var port = process.env.port || 3000;
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log("App listening to: "+port)
    // createColllection('Books')
    // createUserColllection('Users')
